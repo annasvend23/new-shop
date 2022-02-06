@@ -1,0 +1,54 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.image {
+  width: 90%;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.container_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  margin-bottom: 5px;
+  margin-top: 0px;
+  font-size: 24px;
+}
+
+.country {
+  margin-top: 0;
+  color: #C0C0C0;
+}
+
+.in-stock {
+  text-align: center;
+}
+
+.button {
+  border: none;
+  background-color: #008000;
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.button_not-active {
+  background-color: #C0C0C0;
+  color: black;
+}
+
+input {
+  padding: 10px;
+  margin-right: 10px;
+}

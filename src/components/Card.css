@@ -1,0 +1,55 @@
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E5E4E2;
+  width: 280px;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.card a {
+  text-decoration: none;
+}
+
+.card a, .card a:visited {
+  color: #C0C0C0;
+}
+
+.card__image {
+  object-fit: cover;
+  width: 260px;
+  height: 260px;
+}
+
+.card__title {
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: black;
+}
+
+.card__country {
+  margin-top: 0;
+  color: #C0C0C0;
+}
+
+.card__button {
+  border: none;
+  background-color: #008000;
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.card__button_not-active {
+  background-color: #C0C0C0;
+  color: black;
+}
+
+.price-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
