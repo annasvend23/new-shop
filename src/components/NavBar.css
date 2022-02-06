@@ -1,0 +1,13 @@
+.menu__link {
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.menu__link_active {
+  text-decoration: underline;
+  color: #437dff;
+}
+
+.menu__link:visited {
+  color: black;
+}
