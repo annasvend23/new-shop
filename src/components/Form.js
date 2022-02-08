@@ -1,25 +1,21 @@
-import React, { useContext, useState } from 'react';
-import { AppContext } from './AppContext';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { customer, admin } from './constants';
+import { setCurrentUser, setPopupActive } from './redux/actions';
 import './Form.css';
 
 const isObjectEmpty = (object) => Object.keys(object).length === 0;
 
-const Form = () => {
+const Form = ({ setCurrentUser, setPopupActive }) => {
   const initialValues = {
     userName: '',
     password: '',
-    role: '',
   };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
-  const { currentUser, setCurrentUser, setPopupActive } =
-    useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmit(true);
 
     const validateErrors = validate(formValues);
     setFormErrors(validate(formValues));
@@ -108,4 +104,9 @@ const Form = () => {
   );
 };
 
-export default Form;
+const mapDispatchToProps = {
+  setCurrentUser,
+  setPopupActive,
+};
+
+export default connect(null, mapDispatchToProps)(Form);

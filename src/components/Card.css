@@ -2,7 +2,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  border: 1px solid #E5E4E2;
+  border: 1px solid #e5e4e2;
   width: 280px;
   text-align: left;
   padding: 10px;
@@ -13,8 +13,9 @@
   text-decoration: none;
 }
 
-.card a, .card a:visited {
-  color: #C0C0C0;
+.card a,
+.card a:visited {
+  color: #c0c0c0;
 }
 
 .card__image {
@@ -31,7 +32,7 @@
 
 .card__country {
   margin-top: 0;
-  color: #C0C0C0;
+  color: #c0c0c0;
 }
 
 .card__button {
@@ -44,7 +45,7 @@
 }
 
 .card__button_not-active {
-  background-color: #C0C0C0;
+  background-color: #c0c0c0;
   color: black;
 }
 

@@ -1,28 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppContext } from './AppContext';
+import { updateInStock } from './redux/actions';
 import './Card.css';
 
 const Card = (props) => {
-  const [good, setGood] = useState(props.good);
-  const { currentUser, setCartItems } = useContext(AppContext);
+  const { currentUser, good, updateInStock } = props;
 
   const handleClick = () => {
-    const { inStock } = good;
-    fetch(`http://localhost:3000/goods/${good.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        inStock: inStock - 1,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setGood(json);
-        setCartItems((prevCartItems) => prevCartItems.concat(json));
-      });
+    const value = 1;
+    updateInStock(good, value);
   };
 
   return (
@@ -57,4 +44,14 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.currentUser,
+  };
+};
+
+const mapDispatchToProps = {
+  updateInStock,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

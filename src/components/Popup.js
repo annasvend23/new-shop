@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import Form from './Form';
-import { AppContext } from './AppContext';
+import { setPopupActive } from './redux/actions';
 import './Popup.css';
 
-const Popup = () => {
-  const { popupActive, setPopupActive } = useContext(AppContext);
+const Popup = ({ isActive, setPopupActive }) => {
   return (
-    <div className={popupActive ? 'popup active' : 'popup'}>
+    <div className={isActive ? 'popup active' : 'popup'}>
       <div className='popup__content'>
         <img
           src='/close.svg'
@@ -21,4 +21,12 @@ const Popup = () => {
   );
 };
 
-export default Popup;
+const mapStateToProps = (state) => {
+  return { isActive: state.popupReducer.isActive };
+};
+
+const mapDispatchToProps = {
+  setPopupActive,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);
