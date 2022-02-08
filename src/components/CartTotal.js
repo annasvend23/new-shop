@@ -1,12 +1,21 @@
-import React, { useContext } from 'react';
-import { AppContext } from './AppContext';
+import React from 'react';
+import { connect } from 'react-redux';
 import './CartTotal.css';
 
-const CartTotal = () => {
-  const { cartItems } = useContext(AppContext);
+const CartTotal = ({ cartItems }) => {
   const price = cartItems.reduce((sum, item) => sum + item.price, 0);
 
-  return <p className='cart'>В корзине {cartItems.length} позиции на сумму {price} ₽</p>;
+  return (
+    <p className='cart'>
+      В корзине {cartItems.length} позиции на сумму {price} ₽
+    </p>
+  );
 };
 
-export default CartTotal;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cartReducer.cartItems,
+  };
+};
+
+export default connect(mapStateToProps)(CartTotal);

@@ -1,39 +1,31 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchGood, updateInStock } from './redux/actions';
 import './CardDetailed.css';
-import { AppContext } from './AppContext';
 
-const CardDetailed = () => {
+const CardDetailed = (props) => {
+  const { currentUser, updateInStock, good, fetchGood, loading } = props;
   const { id } = useParams();
-  const [good, setGood] = useState(null);
-  const { currentUser, setCartItems } = useContext(AppContext);
+  const [isValid, setIsValid] = useState(true);
   const inputEl = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/goods/${id}`)
-      .then((res) => res.json())
-      .then((json) => setGood(json));
-  }, [id]);
+    fetchGood(id);
+  }, [id, fetchGood]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleClick = () => {
-    const { inStock } = good;
     const value = inputEl.current.value;
-
-    fetch(`http://localhost:3000/goods/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        inStock: inStock - value,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setGood(json);
-        const goodsArr = Array.from({ length: value }).fill(json);
-        setCartItems((prevCartItems) => prevCartItems.concat(goodsArr));
-      });
+    if (value <= good.inStock) {
+      setIsValid(true);
+      updateInStock(good, value);
+    } else {
+      setIsValid(false);
+    }
   };
 
   return (
@@ -51,20 +43,27 @@ const CardDetailed = () => {
             </div>
             <p className='in-stock'>В наличии {good.inStock} шт</p>
             <div className='button-container'>
-              <input
-                ref={inputEl}
-                type='number'
-                min='1'
-                max={good.inStock}
-              ></input>
               {!currentUser ? (
                 <button className='button'>
                   Войдите, чтобы добавить в корзину
                 </button>
               ) : good.inStock ? (
-                <button className='button' onClick={handleClick}>
-                  Добавить в корзину
-                </button>
+                <div>
+                  <input
+                    ref={inputEl}
+                    type='number'
+                    min='1'
+                    max={good.inStock}
+                  ></input>
+                  <button className='button' onClick={handleClick}>
+                    Добавить в корзину
+                  </button>
+                  {isValid ? null : (
+                    <div className='error'>
+                      Количество товара не может быть больше {good.inStock}
+                    </div>
+                  )}
+                </div>
               ) : (
                 <button className='button button_not-active'>
                   Нет в наличии
@@ -78,4 +77,17 @@ const CardDetailed = () => {
   );
 };
 
-export default CardDetailed;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userReducer.currentUser,
+    good: state.goodReducer.good,
+    loading: state.goodsReducer.loading,
+  };
+};
+
+const mapDispatchToProps = {
+  updateInStock,
+  fetchGood,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardDetailed);

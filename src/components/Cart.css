@@ -1,0 +1,22 @@
+.cart__title {
+  text-align: center;
+}
+
+.cart__goods {
+  padding: 0;
+  width: 100%;
+  margin: auto;
+}
+
+.cart__good-container {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+  line-height: 2em;
+}
+
+.cart__total {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 16px;
+  font-weight: 600;
+}

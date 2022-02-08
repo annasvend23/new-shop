@@ -23,7 +23,7 @@
 
 .country {
   margin-top: 0;
-  color: #C0C0C0;
+  color: #c0c0c0;
 }
 
 .in-stock {
@@ -44,7 +44,7 @@
 }
 
 .button_not-active {
-  background-color: #C0C0C0;
+  background-color: #c0c0c0;
   color: black;
 }
 

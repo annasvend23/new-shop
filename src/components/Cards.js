@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchGoods } from './redux/actions';
 import Card from './Card';
 import './Cards.css';
 
-const Cards = () => {
-  const [goods, setGoods] = useState(null);
+const Cards = (props) => {
+  const { goods, fetchGoods, loading } = props;
 
   useEffect(() => {
-    fetch('http://localhost:3000/goods')
-      .then((res) => res.json())
-      .then((json) => setGoods(json));
-  }, []);
+    fetchGoods();
+  }, [fetchGoods]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ul className='cards'>
-      {goods && goods.map((good) => {
-        return (
-          <Card good={good} key={good.id}/>
-        )
-      })}
+      {goods &&
+        goods.map((good) => {
+          return <Card good={good} key={good.id} />;
+        })}
     </ul>
   );
 };
 
-export default Cards;
+const mapStateToProps = (state) => ({
+  loading: state.goodsReducer.loading,
+  goods: state.goodsReducer.goods,
+});
+
+const mapDispatchToProps = {
+  fetchGoods,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cards);
